@@ -1,25 +1,53 @@
+import 'dart:math' show log;
+
 class ContinuousDistibution {
   /*
   This is a generic distribution class for continuous distributions.
   */
-  Function continuous_pdf;
-  Function continuous_cdf;
-  Function continuous_rvs;
+  Function _continuous_pdf;
+  Function _continuous_cdf;
+  Function _continuous_rvs;
 
   ContinuousDistibution(
-      this.continuous_pdf, this.continuous_cdf, this.continuous_rvs);
-  rvs({loc = 0, scale = 1, size = 1}) {}
+      this._continuous_pdf, this._continuous_cdf, this._continuous_rvs);
+
+  _pdf(x, loc, scale) {
+    return scale * _continuous_pdf(x - loc);
+  }
+
+  _cdf(x, loc, scale) {
+    return scale * _continuous_cdf(x - loc);
+  }
+
+  _rvs(loc, scale, size) {
+    if (size != 1) {
+      return List<double>.generate(
+          size, (int index) => scale * _continuous_rvs() + loc);
+    } else {
+      return scale * _continuous_rvs() + loc;
+    }
+  }
+
+  rvs({loc = 0, scale = 1, size = 1}) {
+    return _rvs(loc, scale, size);
+  }
 
   pdf(x, {loc = 0, scale = 1}) {
-    return scale * continuous_pdf(x - loc);
+    return _pdf(x, loc, scale);
   }
 
-  logpdf(x, {loc = 0, scale = 1}) {}
+  logpdf(x, {loc = 0, scale = 1}) {
+    return log(_pdf(x, loc, scale));
+  }
+
   cdf(x, {loc = 0, scale = 1}) {
-    return scale * continuous_cdf(x - loc);
+    return _cdf(x, loc, scale);
   }
 
-  logcdf(x, {loc = 0, scale = 1}) {}
+  logcdf(x, {loc = 0, scale = 1}) {
+    return log(_cdf(x, loc, scale));
+  }
+
   sf(x, {loc = 0, scale = 1}) {}
   logsf(x, {loc = 0, scale = 1}) {}
   ppf(q, {loc = 0, scale = 1}) {}
@@ -41,9 +69,9 @@ class DiscreteDistribution {
   This is a generic distribution class for discrete distributions.
   */
   Function prob_mass_func;
-  Function continuous_cdf;
+  Function _continuous_cdf;
 
-  DiscreteDistribution(this.prob_mass_func, this.continuous_cdf) {}
+  DiscreteDistribution(this.prob_mass_func, this._continuous_cdf) {}
   rvs(mu, {loc = 0, size = 1}) {}
 
   pmf(k, mu, {loc = 0}) {
@@ -53,7 +81,7 @@ class DiscreteDistribution {
   logpmf(k, mu, {loc = 0}) {}
 
   cdf(k, mu, {loc = 0}) {
-    return continuous_cdf();
+    return _continuous_cdf();
   }
 
   logcdf(k, mu, {loc = 0}) {}
