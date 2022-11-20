@@ -15,9 +15,9 @@ Helpful Links
 https://mathworld.wolfram.com/NormalDistribution.html 
 https://en.wikipedia.org/wiki/Normal_distribution */
 
-_norm_pdf(double x, double sigma) {
+double _norm_pdf(double x, double sigma) {
   /* The probability density function of a normal distribution for a real
-  number x. */
+  number [x] with standard deviation [sigma]. */
   double u = x / sigma.abs();
   double p = (1 / (sqrt(2 * pi) * sigma.abs())) * exp(-u * u / 2);
   return p;
@@ -32,7 +32,7 @@ double _norm_cdf(double x, double sigma) {
 
 double _norm_rvs({double sigma = 1}) {
   /* Returns a normal (Gaussian) distribution random variate using the 
-  Box-Muller transform.
+  Box-Muller transform method.
   
   https://mathworld.wolfram.com/Box-MullerTransformation.html
   https://en.wikipedia.org/wiki/Box–Muller_transform */

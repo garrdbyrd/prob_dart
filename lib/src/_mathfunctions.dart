@@ -1,4 +1,5 @@
-import 'dart:math' show exp, pow;
+import 'dart:math' show exp, pow, sin, sqrt, pi;
+import 'dart:svg';
 
 double erf(double x) {
   /* Numerical approximation of the error function.
@@ -31,4 +32,79 @@ double erf(double x) {
     z = t - y;
   }
   return z;
+}
+
+int combination(int n, int k) {
+  if (n < 0 || k < 0) {
+    throw ArgumentError.value(k);
+  }
+  int n_minus_k = n - k;
+  int n_factorial = 1;
+  int k_factorial = 1;
+  int n_minus_k_factorial = 1;
+
+  for (n; n > 0; n--) {
+    n_factorial *= n;
+  }
+  for (k; k > 0; k--) {
+    k_factorial *= k;
+  }
+  for (n_minus_k; n_minus_k > 0; n_minus_k--) {
+    n_minus_k_factorial *= n_minus_k;
+  }
+  int m = n_factorial ~/ (k_factorial * n_minus_k_factorial);
+  return m;
+}
+
+double gamma(double x) {
+  List p = [
+    676.5203681218851,
+    -1259.1392167224028,
+    771.32342877765313,
+    -176.61502916214059,
+    12.507343278686905,
+    -0.13857109526572012,
+    9.9843695780195716e-6,
+    1.5056327351493116e-7
+  ];
+
+  double y;
+  if (x < 0.5) {
+    y = pi / (sin(pi * x) * gamma(1 - x));
+  } else {
+    x -= 1;
+    double w = 0.99999999999980993;
+    for (int i = 0; i < p.length; i++) {
+      w += p[i] / (x + i + 1);
+    }
+    double t = x + p.length - 0.5;
+    y = sqrt(2 * pi) * pow(t, (x + 0.5)) * exp(-1 * t) * x;
+  }
+  return y;
+}
+
+double beta(double a, double b) {
+  double B = gamma(a) * gamma(b) / gamma(a + b);
+  return B;
+}
+
+double hypergeometric(double a, double b, double c, double z) {
+  double leading_factor = gamma(c) / (gamma(a) * gamma(b));
+  double sum = 0;
+  for (int i = 0; i < 100; i++) {
+    double term =
+        pow(z, i) * gamma(a + i) * gamma(b + i) / (gamma(c + i) * gamma(i + 1));
+    sum += term;
+  }
+  return sum;
+}
+
+double incomplete_beta(double x, double a, double b) {
+  double I = pow(x, a) * hypergeometric(a, 1 - b, a + 1, x) / a;
+  return I;
+}
+
+double regularized_incomplete_beta(double x, double a, double b) {
+  double I = incomplete_beta(x, a, b) / beta(a, b);
+  return I;
 }
