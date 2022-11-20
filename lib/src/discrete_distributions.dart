@@ -1,7 +1,6 @@
 import '_distributions.dart';
 import '_mathfunctions.dart' show combination, regularized_incomplete_beta;
 import 'dart:math' show Random, pow;
-//pi, sqrt, exp, sqrt2, Random, log;
 
 DiscreteDistribution binom =
     DiscreteDistribution(_binom_pmf, _binom_cdf, _binom_rvs);
