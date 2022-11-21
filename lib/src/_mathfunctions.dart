@@ -35,6 +35,15 @@ double erf(double x) {
 }
 
 int combination(int n, int k) {
+  /*
+  Returns the number of ways of picking k unordered outcomes 
+  from n possibilities. I.e., returns the value of "n choose k".
+
+  Helpful links
+  https://mathworld.wolfram.com/Combination.html
+  https://en.wikipedia.org/wiki/Combination
+  */
+
   if (n < 0 || k < 0) {
     throw ArgumentError.value(k);
   }
@@ -57,6 +66,16 @@ int combination(int n, int k) {
 }
 
 double gamma(double x) {
+  /* A numerical approximation of the gamma function using the Lanczos 
+  approximation. The domain of this implementation is the real line.
+
+  Helpful links
+  https://mathworld.wolfram.com/GammaFunction.html
+  https://en.wikipedia.org/wiki/Gamma_function
+
+  https://mathworld.wolfram.com/LanczosApproximation.html
+  https://en.wikipedia.org/wiki/Lanczos_approximation
+  */
   List p = [
     676.5203681218851,
     -1259.1392167224028,
@@ -84,11 +103,25 @@ double gamma(double x) {
 }
 
 double beta(double a, double b) {
+  /* Returns the Beta function for two parameters (a) and (b).
+
+  Helpful Links
+  https://mathworld.wolfram.com/BetaFunction.html
+  https://en.wikipedia.org/wiki/Beta_function
+  */
   double B = gamma(a) * gamma(b) / gamma(a + b);
   return B;
 }
 
 double hypergeometric(double a, double b, double c, double z) {
+  /* An approximation of the hypergeometric function. The domain of this 
+  implementation is the real line.
+
+  Helpful links
+  https://mathworld.wolfram.com/HypergeometricFunction.html
+  https://en.wikipedia.org/wiki/Hypergeometric_function
+  */
+
   double leading_factor = gamma(c) / (gamma(a) * gamma(b));
   double sum = 0;
   for (int i = 0; i < 100; i++) {
@@ -100,11 +133,26 @@ double hypergeometric(double a, double b, double c, double z) {
 }
 
 double incomplete_beta(double x, double a, double b) {
+  /* An approximation of the incomplete beta function. The domain of this 
+  implementation is the real line.
+
+  Helpful links
+  https://mathworld.wolfram.com/IncompleteBetaFunction.html
+  https://en.wikipedia.org/wiki/Beta_function#Incomplete_beta_function
+  */
+
   double I = pow(x, a) * hypergeometric(a, 1 - b, a + 1, x) / a;
   return I;
 }
 
 double regularized_incomplete_beta(double x, double a, double b) {
+  /* An approximation of the regularized incomplete beta function. The domain of this 
+  implementation is the real line.
+
+  Helpful links
+  https://mathworld.wolfram.com/RegularizedBetaFunction.html
+  https://en.wikipedia.org/wiki/Beta_function#Incomplete_beta_function
+  */
   double I = incomplete_beta(x, a, b) / beta(a, b);
   return I;
 }

@@ -21,7 +21,7 @@ https://en.wikipedia.org/wiki/Binomial_distribution */
 
 num _binom_pmf(int k, int n, double p, {loc = 0}) {
   /* The probability mass function of a binomial distribution for a positive
-  integer [k] with probability [p]. */
+  integer (n) with probability (p). */
   num m = combination(n, k) * pow(p, k) * pow(1 - p, n - k);
   return m;
 }
@@ -32,7 +32,8 @@ num _binom_cdf(int k, int n, double p, {loc = 0}) {
 }
 
 num _binom_rvs(n, p, {loc = 0, size = 1}) {
-  /* Returns a binomial distribution random vairate using the Coin flip method.
+  /* Returns a binomial distribution random vairate using the Coin flip 
+  method. [2]
   
   NOTE:
   This method should be replaced with either of the waiting time methods once
