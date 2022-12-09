@@ -3,7 +3,7 @@ import '_mathfunctions.dart' show erf;
 import 'dart:math' show pi, sqrt, exp, sqrt2, Random, log;
 
 ContinuousDistibution norm =
-    ContinuousDistibution(_norm_pdf, _norm_cdf, _norm_rvs);
+    ContinuousDistibution(_normPDF, _normCDF, _normRVS);
 /*
 A normal continuous random variable.
 
@@ -15,7 +15,7 @@ Helpful Links
 https://mathworld.wolfram.com/NormalDistribution.html 
 https://en.wikipedia.org/wiki/Normal_distribution */
 
-double _norm_pdf(double x, double sigma) {
+double _normPDF(double x, double sigma) {
   /* The probability density function of a normal distribution for a real
   number [x] with standard deviation [sigma]. */
   double u = x / sigma.abs();
@@ -23,14 +23,14 @@ double _norm_pdf(double x, double sigma) {
   return p;
 }
 
-double _norm_cdf(double x, double sigma) {
+double _normCDF(double x, double sigma) {
   /* The cumulative distribution function of a normal distribution for a real
   number x. */
   double y = 0.5 * (1 + erf(x / (sigma * sqrt2)));
   return y;
 }
 
-double _norm_rvs({double sigma = 1}) {
+double _normRVS({double sigma = 1}) {
   /* Returns a normal (Gaussian) distribution random variate using the 
   Box-Muller transform method.
   

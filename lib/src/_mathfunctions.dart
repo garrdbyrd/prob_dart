@@ -1,5 +1,4 @@
 import 'dart:math' show exp, pow, sin, sqrt, pi;
-import 'dart:svg';
 
 double erf(double x) {
   /* Numerical approximation of the error function.
@@ -47,21 +46,21 @@ int combination(int n, int k) {
   if (n < 0 || k < 0) {
     throw ArgumentError.value(k);
   }
-  int n_minus_k = n - k;
-  int n_factorial = 1;
-  int k_factorial = 1;
-  int n_minus_k_factorial = 1;
+  int nMinusk = n - k;
+  int nFactorial = 1;
+  int kFactorial = 1;
+  int nMinuskFactorial = 1;
 
   for (n; n > 0; n--) {
-    n_factorial *= n;
+    nFactorial *= n;
   }
   for (k; k > 0; k--) {
-    k_factorial *= k;
+    kFactorial *= k;
   }
-  for (n_minus_k; n_minus_k > 0; n_minus_k--) {
-    n_minus_k_factorial *= n_minus_k;
+  for (nMinusk; nMinusk > 0; nMinusk--) {
+    nMinuskFactorial *= nMinusk;
   }
-  int m = n_factorial ~/ (k_factorial * n_minus_k_factorial);
+  int m = nFactorial ~/ (kFactorial * nMinuskFactorial);
   return m;
 }
 
@@ -122,7 +121,7 @@ double hypergeometric(double a, double b, double c, double z) {
   https://en.wikipedia.org/wiki/Hypergeometric_function
   */
 
-  double leading_factor = gamma(c) / (gamma(a) * gamma(b));
+  double leadingFactor = gamma(c) / (gamma(a) * gamma(b));
   double sum = 0;
   for (int i = 0; i < 100; i++) {
     double term =
@@ -132,27 +131,27 @@ double hypergeometric(double a, double b, double c, double z) {
   return sum;
 }
 
-double incomplete_beta(double x, double a, double b) {
+double incompleteBeta(double x, double a, double b) {
   /* An approximation of the incomplete beta function. The domain of this 
   implementation is the real line.
 
   Helpful links
   https://mathworld.wolfram.com/IncompleteBetaFunction.html
-  https://en.wikipedia.org/wiki/Beta_function#Incomplete_beta_function
+  https://en.wikipedia.org/wiki/Beta_function#incompleteBeta_function
   */
 
   double I = pow(x, a) * hypergeometric(a, 1 - b, a + 1, x) / a;
   return I;
 }
 
-double regularized_incomplete_beta(double x, double a, double b) {
+double regularizedIncompleteBeta(double x, double a, double b) {
   /* An approximation of the regularized incomplete beta function. The domain of this 
   implementation is the real line.
 
   Helpful links
   https://mathworld.wolfram.com/RegularizedBetaFunction.html
-  https://en.wikipedia.org/wiki/Beta_function#Incomplete_beta_function
+  https://en.wikipedia.org/wiki/Beta_function#incompleteBeta_function
   */
-  double I = incomplete_beta(x, a, b) / beta(a, b);
+  double I = incompleteBeta(x, a, b) / beta(a, b);
   return I;
 }

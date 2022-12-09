@@ -1,9 +1,9 @@
 import '_distributions.dart';
-import '_mathfunctions.dart' show combination, regularized_incomplete_beta;
+import '_mathfunctions.dart' show combination, regularizedIncompleteBeta;
 import 'dart:math' show Random, pow;
 
 DiscreteDistribution binom =
-    DiscreteDistribution(_binom_pmf, _binom_cdf, _binom_rvs);
+    DiscreteDistribution(_binomPMF, _binomCDF, _binomRVS);
 /*
 A binomial discrete random variable.
 
@@ -19,19 +19,19 @@ Helpful Links
 https://mathworld.wolfram.com/BinomialDistribution.html 
 https://en.wikipedia.org/wiki/Binomial_distribution */
 
-num _binom_pmf(int k, int n, double p, {loc = 0}) {
+num _binomPMF(int k, int n, double p, {loc = 0}) {
   /* The probability mass function of a binomial distribution for a positive
   integer (n) with probability (p). */
   num m = combination(n, k) * pow(p, k) * pow(1 - p, n - k);
   return m;
 }
 
-num _binom_cdf(int k, int n, double p, {loc = 0}) {
-  num m = regularized_incomplete_beta(1 - p, n - 1.0 * k, 1 + 1.0 * k);
+num _binomCDF(int k, int n, double p, {loc = 0}) {
+  num m = regularizedIncompleteBeta(1 - p, n - 1.0 * k, 1 + 1.0 * k);
   return m;
 }
 
-num _binom_rvs(n, p, {loc = 0, size = 1}) {
+num _binomRVS(n, p, {loc = 0, size = 1}) {
   /* Returns a binomial distribution random vairate using the Coin flip 
   method. [2]
   

@@ -4,27 +4,27 @@ class ContinuousDistibution {
   /*
   This is a generic distribution class for continuous distributions.
   */
-  Function _continuous_pdf;
-  Function _continuous_cdf;
-  Function _continuous_rvs;
+  final Function _continuousPDF;
+  final Function _continuousCDF;
+  final Function _continuousRVS;
 
   ContinuousDistibution(
-      this._continuous_pdf, this._continuous_cdf, this._continuous_rvs);
+      this._continuousPDF, this._continuousCDF, this._continuousRVS);
 
   _pdf(x, loc, scale) {
-    return scale * _continuous_pdf(x - loc);
+    return scale * _continuousPDF(x - loc);
   }
 
   _cdf(x, loc, scale) {
-    return scale * _continuous_cdf(x - loc);
+    return scale * _continuousCDF(x - loc);
   }
 
   _rvs(loc, scale, size) {
     if (size != 1) {
       return List<double>.generate(
-          size, (int index) => scale * _continuous_rvs() + loc);
+          size, (int index) => scale * _continuousRVS() + loc);
     } else {
-      return scale * _continuous_rvs() + loc;
+      return scale * _continuousRVS() + loc;
     }
   }
 
@@ -81,27 +81,27 @@ class DiscreteDistribution {
   /*
   This is a generic distribution class for discrete distributions.
   */
-  Function _discrete_pmf;
-  Function _discrete_cdf;
-  Function _discrete_rvs;
+  final Function _discretePMF;
+  final Function _discreteCDF;
+  final Function _discreteRVS;
 
   DiscreteDistribution(
-      this._discrete_pmf, this._discrete_cdf, this._discrete_rvs) {}
+      this._discretePMF, this._discreteCDF, this._discreteRVS) {}
 
   _pmf(x, loc, scale) {
-    return scale * _discrete_pmf(x - loc);
+    return scale * _discretePMF(x - loc);
   }
 
   _cdf(x, loc, scale) {
-    return scale * _discrete_cdf(x - loc);
+    return scale * _discreteCDF(x - loc);
   }
 
   _rvs(loc, scale, size) {
     if (size != 1) {
       return List<double>.generate(
-          size, (int index) => scale * _discrete_rvs() + loc);
+          size, (int index) => scale * _discreteRVS() + loc);
     } else {
-      return scale * _discrete_rvs() + loc;
+      return scale * _discreteRVS() + loc;
     }
   }
 
